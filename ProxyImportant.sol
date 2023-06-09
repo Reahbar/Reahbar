@@ -25,13 +25,11 @@ contract OneCall {
     function setVars(address _contract, uint _num, string memory _text) public payable {
         // OneCall's storage is set, Twocalled is modified.
         (bool success, bytes memory data) = _contract.delegatecall(
-            abi.encodeWithSignature("setVars(uint256,string)", _num, _text) // Inside the parameters uint256, afther this don't give space otherwise you will face errors revert
-	                                                                    //The transaction has been reverted to the initial state.
-                                                                        //Reason provided by the contract: "Function call failed".
-                                                                        //Debug the transaction to get more information.
-        );                                                              // To avoid this don't give space after comma ("setVars(uint256,string)", _num, _text) 
-                                                                        // It will work fine!
-        require(success, "Function call failed");
+            abi.encodeWithSignature("setVars(uint256,string)", _num, _text) ); // Note:
+            /* Inside the parameters uint256, afther this don't give space otherwise you will face the errors revert. The transaction has been reverted to the initial state.
+               Reason provided by the contract: "Function call failed". //Debug the transaction to get more information. To avoid this don't give space after comma 
+               ("setVars(uint256,string)", _num, _text) // It will work fine! */
+            require(success, "Function call failed");
     }
 }
 
